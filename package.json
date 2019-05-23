@@ -1,0 +1,20 @@
+{
+  "name": "rocket-player-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest App.test --notify --config=config.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cors": "2.8.*",
+    "dotenv": "^8.0.0",
+    "express": "4.16.*",
+    "pg": "7.8.*"
+  }
+}
