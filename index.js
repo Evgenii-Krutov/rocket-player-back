@@ -111,6 +111,22 @@ app.post('/deletePlaylist', async (request, response) => {
   response.end();
 });
 
+app.post('/addTrackToPlaylist', async (request, response) => {
+  const trackInfo = request.body;
+  console.log(trackInfo);
+  const duplicatedPlaylists =
+    await pool.query(
+      'SELECT * FROM tracks WHERE playlist_id=$1 AND playing_id=$2',
+      [trackInfo.playlistId, trackInfo.playingId]
+    );
+  if (!duplicatedPlaylists.rows.length) {
+    await pool.query(
+      `INSERT INTO tracks(name, avatar, playlist_id, playing_id) VALUES ($1, $2, $3, $4)`,
+      [trackInfo.name, trackInfo.avatar, trackInfo.playlistId, trackInfo.playingId]);
+  }
+  response.end();
+});
+
 const createTypedPlaylists = (playlists) => {
   const deezerPlaylists = playlists.filter(playlist => playlist.type === "deezer");
   const soundcloudPlaylists = playlists.filter(playlist => playlist.type === "soundcloud");
