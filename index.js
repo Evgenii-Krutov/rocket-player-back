@@ -111,9 +111,15 @@ app.post('/deletePlaylist', async (request, response) => {
   response.end();
 });
 
+app.post('/getPlaylistTracks', async (request, response) => {
+  const playlistTracks =
+    await pool.query('SELECT * FROM tracks WHERE playlist_id=$1', [request.body.id]);
+  response.json(playlistTracks.rows);
+  response.end();
+});
+
 app.post('/addTrackToPlaylist', async (request, response) => {
   const trackInfo = request.body;
-  console.log(trackInfo);
   const duplicatedPlaylists =
     await pool.query(
       'SELECT * FROM tracks WHERE playlist_id=$1 AND playing_id=$2',
